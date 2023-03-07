@@ -1,0 +1,103 @@
+[
+    {
+        "type" : "text",
+        "args" : {
+            "text" : "Write me",
+            "font" : ".title",
+            "fontColor" : "#717882"
+        },
+        "uuid" : "text-123456789"
+    },
+    {
+        "type" : "text",
+        "args" : {
+            "text" : "bottom text",
+            "font" : ".caption",
+            "fontColor" : "#4287f5"
+        },
+        "uuid" : "text-123456799"
+    },
+    {
+        "type" : "form_field",
+        "args" : {
+            "text" : "name",
+            "hint" : "Enter name",
+            "label" : "Name: "
+        },
+        "uuid" : "form-123456789"
+    },
+    {
+        "type" : "form_field",
+        "args" : {
+            "text" : "address",
+            "hint" : "Enter address"
+        },
+        "uuid" : "form-123456799"
+    },
+    {
+        "type" : "date",
+        "args" : {
+            "label" : "Birth date",
+            "selection" : "Enter address"
+        },
+        "uuid" : "date-123456789"
+    },
+    {
+        "type" : "time",
+        "args" : {
+            "label" : "Arrival Time",
+            "selection" : "e"
+        },
+        "uuid" : "time-123456789"
+    },
+    {
+        "type" : "picker",
+        "args" : {
+            "label" : "Pick email",
+            "selection" : "e",
+            "style" : "segmented"
+        },
+        "options" : [
+            ".com",
+            ".pl",
+            ".eu"
+        ],
+        "uuid" : "picker-123456789"
+    },
+    {
+        "type" : "picker",
+        "args" : {
+            "label" : "Pick answer",
+            "selection" : "e",
+            "style" : "default"
+        },
+        "options" : [
+            "yes",
+            "no"
+        ],
+        "uuid" : "picker-123456799"
+    },
+    {
+        "type" : "checkbox",
+        "args" : {
+            "label" : "Check me"
+        },
+        "uuid" : "checkbox-123456789"
+    },
+    {
+        "type" : "toggle",
+        "args" : {
+            "label" : "Toggle me"
+        },
+        "uuid" : "toggle-123456789"
+    },
+    {
+        "type" : "filepicker",
+        "args" : {
+            "label" : "Choose file",
+            "buttonText" : "Click here"
+        },
+        "uuid" : "filepicker-123456789"
+    }
+    
+]
