@@ -37,16 +37,14 @@
     {
         "type" : "date",
         "args" : {
-            "label" : "Birth date",
-            "selection" : "Enter address"
+            "label" : "Birth date"
         },
         "uuid" : "date-123456789"
     },
     {
         "type" : "time",
         "args" : {
-            "label" : "Arrival Time",
-            "selection" : "e"
+            "label" : "Arrival Time"
         },
         "uuid" : "time-123456789"
     },

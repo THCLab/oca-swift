@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ContentView: View {
     @ObservedObject var controller: HomePageController
@@ -83,6 +84,8 @@ func collectValue(component: UIComponent) -> String? {
     }
     return value
 }
+
+
 
 class ListModel : ObservableObject {
     @Published var values = []

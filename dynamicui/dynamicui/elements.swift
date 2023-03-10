@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import UIKit
 
 protocol UIComponent {
     var uniqueId: String { get }
@@ -73,19 +74,6 @@ struct TextComponentView: View {
     let uiModel: TextComponentUIModel
     var body: some View {
         Text(uiModel.text).font(uiModel.fontType == ".title" ? .title : .body).foregroundColor(Color.init(hex: uiModel.fontColor ?? "000000"))
-    }
-    
-    func returnColor(color: String) -> Color {
-        switch color {
-        case "blue":
-            return .blue
-        case "black":
-            return .black
-        case "yellow":
-            return .yellow
-        default:
-            return .black
-        }
     }
 }
 
@@ -182,14 +170,14 @@ struct PickerComponentView: View {
                 Text(uiModel.label!)
                 Picker(uiModel.label!, selection: uiModel.selection){
                     ForEach(0 ..< uiModel.options.count, id: \.self) { option in
-                        Text(self.uiModel.options[option])
+                        Text(uiModel.options[option]).tag(option)
                     }
-                }
+                }.pickerStyle(.segmented)
             }
         }else{
             Picker("", selection: uiModel.selection){
                 ForEach(0 ..< uiModel.options.count, id: \.self) {
-                    Text(self.uiModel.options[$0])
+                    Text(self.uiModel.options[$0]).tag(uiModel.options[$0])
                 }
             }
         }
@@ -305,70 +293,73 @@ struct ToggleComponent: UIComponent {
 struct FilepickerUIModel {
     let label: String?
     let buttonText: String
-    var isShowing: Binding<Bool>
-    let buttonAction: ()
+    //var isShowing: Binding<Bool>
+    //let buttonAction: ()
+    var selectedFile: Binding<Data?>
+    var selectedFileName: Binding<String?>
 }
 
-struct FilepickerComponentView: View {
-    var uiModel: FilepickerUIModel
-    var body: some View {
-        if uiModel.label != nil{
-            HStack {
-                Text(uiModel.label!)
-//                Button(action: {
-//                    openDocumentPicker(controller: uiModel.controller)
-//                }) {
-//                    Text(uiModel.buttonText)
-//                }
-                Button {
-                    uiModel.buttonAction
-                } label: {
-                    Text(uiModel.buttonText)
-                }
-                .fileImporter(isPresented: uiModel.isShowing, allowedContentTypes: [.item], allowsMultipleSelection: true, onCompletion: { results in
-                    switch results {
-                    case .success(let fileurls):
-                        print(fileurls.count)
-                        
-                        for fileurl in fileurls {
-                            print(fileurl.path)
-                        }
-                        
-                    case .failure(let error):
-                        print(error)
-                    }
-                    
-                })
-            }
-        }else{
-//            Button(action: {
-//                openDocumentPicker(controller: uiModel.controller)
-//            }) {
-//                Text(uiModel.buttonText)
-//            }
-            Button{
-                uiModel.buttonAction
-            } label: {
-                Text(uiModel.buttonText)
-            }
-            .fileImporter(isPresented: uiModel.isShowing, allowedContentTypes: [.item], allowsMultipleSelection: true, onCompletion: { results in
-                switch results {
-                case .success(let fileurls):
-                    print(fileurls.count)
-                    
-                    for fileurl in fileurls {
-                        print(fileurl.path)
-                    }
-                    
-                case .failure(let error):
-                    print(error)
-                }
-                
-            })
-        }
+enum PickerType: Identifiable {
+    case cameraRoll, files
+    
+    var id: Int {
+        hashValue
     }
 }
 
+struct FilepickerComponentView: View {
+    let uiModel: FilepickerUIModel
+    @State private var pickerType: PickerType? = .files
+    @State var isSheetPresenting = false
+    
+    var body: some View {
+        if uiModel.label != nil {
+            if uiModel.selectedFileName.wrappedValue != nil {
+                VStack {
+                    HStack {
+                        Text(uiModel.label!)
+                        Button(uiModel.buttonText) {
+                            isSheetPresenting.toggle()
+                        }.sheet(isPresented: $isSheetPresenting, content: {
+                            DocumentPicker(file: uiModel.selectedFile, fileName: uiModel.selectedFileName)
+                        })
+                    }
+                    HStack {
+                        Text(uiModel.selectedFileName.wrappedValue!)
+                    }
+                }
+            }else{
+                HStack {
+                    Text(uiModel.label!)
+                    Button(uiModel.buttonText) {
+                        isSheetPresenting.toggle()
+                    }.sheet(isPresented: $isSheetPresenting, content: {
+                        DocumentPicker(file: uiModel.selectedFile, fileName: uiModel.selectedFileName)
+                    })
+                }
+            }
+        }else{
+            if uiModel.selectedFile != nil {
+                VStack {
+                    Button(uiModel.buttonText) {
+                        isSheetPresenting.toggle()
+                    }.sheet(isPresented: $isSheetPresenting, content: {
+                        DocumentPicker(file: uiModel.selectedFile, fileName: uiModel.selectedFileName)
+                    })
+                    HStack {
+                        Text(uiModel.selectedFileName.wrappedValue ?? "")
+                    }
+                }
+            }else{
+                Button(uiModel.buttonText) {
+                    isSheetPresenting.toggle()
+                }.sheet(isPresented: $isSheetPresenting, content: {
+                    DocumentPicker(file: uiModel.selectedFile, fileName: uiModel.selectedFileName)
+                })
+            }
+        }
+    }
+}
 struct FilepickerComponent: UIComponent {
     var uniqueId: String
     let uiModel: FilepickerUIModel
@@ -378,11 +369,4 @@ struct FilepickerComponent: UIComponent {
     }
 }
 
-func openDocumentPicker(controller: UIViewController) {
-    let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.jpeg, .png])
-    //documentPicker.delegate = self
-    documentPicker.modalPresentationStyle = .overFullScreen
-    documentPicker.present(controller, animated: true)
-    //present(documentPicker, animated: true)
-}
 

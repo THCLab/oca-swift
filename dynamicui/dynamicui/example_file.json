@@ -1,0 +1,21 @@
+[
+   {
+      "type":"text",
+      "args":{
+         "text":"Today's discount is:",
+         "font":".title",
+         "fontColor":"000000"
+      },
+      "uuid":"text-123456789"
+   },
+   {
+      "type":"text",
+      "args":{
+         "text":"SPECIAL BLACK FRIDAY DISCOUNT!",
+         "font":".caption",
+         "fontColor":"ff0000"
+      },
+      "uuid":"text-123456799"
+   }
+]
+
