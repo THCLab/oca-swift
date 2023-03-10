@@ -20,11 +20,11 @@ extension View {
     }
 }
 
-extension String {
-    func toBinaryFloatingPoint() -> any BinaryFloatingPoint {
-        return self as! any BinaryFloatingPoint
-    }
-}
+//extension String {
+//    func toBinaryFloatingPoint() -> any BinaryFloatingPoint {
+//        return self as any BinaryFloatingPoint
+//    }
+//}
 
 //allows to define a color using hex
 extension Color {
@@ -196,39 +196,42 @@ struct PickerComponent: UIComponent {
 //Slider
 struct SliderUIModel {
     let label: String?
-    let value: Binding<String>
-    let min: Int
-    let max: Int
-    let step: Int?
+    let value: Binding<Double>
+    let min: Double
+    let max: Double
+    let step: Double?
 }
 
-//struct SliderComponentView : View {
-//    let uiModel: SliderUIModel
-////    @ObservedObject var setInformationVM: SetSliderValue
-////    let elapsedTime = Binding(
-////        get: { Double(setInformationVM.sliderValue) },
-////        set: { setInformationVM.sliderValue = Int($0) } // Or other custom logic
-////            )
-//    var body: some View {
-//        if uiModel.label != nil{
-//            HStack {
-//                Text(uiModel.label!)
-//                Slider(value: uiModel.value, in: String(uiModel.min)...String(uiModel.max))
-//            }
-//        }else{
-//
-//        }
-//    }
-//}
-//
-//struct SliderComponent: UIComponent {
-//    var uniqueId: String
-//    let uiModel: SliderUIModel
-//
-//    func render() -> AnyView {
-//        SliderComponentView(uiModel: uiModel).toAny()
-//    }
-//}
+struct SliderComponentView : View {
+    let uiModel: SliderUIModel
+    @State private var value = 0.2
+    var body: some View {
+        if uiModel.label != nil{
+            VStack {
+                Text(uiModel.label!)
+                HStack {
+                    Text(String(uiModel.min))
+                    Slider(value: uiModel.value, in: uiModel.min...uiModel.max, step: uiModel.step ?? 1)
+                    Text(String(uiModel.max))
+                }
+                //Text("Value: \(uiModel.value, specifier: "%.2f")")
+            }
+        }else{
+            Text(String(uiModel.min))
+            Slider(value: uiModel.value, in: uiModel.min...uiModel.max, step: uiModel.step ?? 1)
+            Text(String(uiModel.max))
+        }
+    }
+}
+
+struct SliderComponent: UIComponent {
+    var uniqueId: String
+    let uiModel: SliderUIModel
+
+    func render() -> AnyView {
+        SliderComponentView(uiModel: uiModel).toAny()
+    }
+}
 
 //Checkbox button
 struct CheckboxUIModel {

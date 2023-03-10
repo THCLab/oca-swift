@@ -61,11 +61,22 @@ func parseToUiComponent(demoData: DemoData) -> UIComponent {
         @ObservedObject var model = FilePickerModel()
         uiComponent = FilepickerComponent(uniqueId: demoData.uuid, uiModel: FilepickerUIModel(label: demoData.args["label"] ?? "", buttonText: demoData.args["buttonText"] ?? "", selectedFile: $model.file, selectedFileName: $model.fileName))
     }
+    else if demoData.type == "slider" {
+        @ObservedObject var model = SliderModel()
+        uiComponent = SliderComponent(uniqueId: demoData.uuid, uiModel: SliderUIModel(label: demoData.args["label"] ?? nil, value: $model.value, min: demoData.args["min"]?.toDouble() ?? 0, max: demoData.args["max"]?.toDouble() ?? 100, step: demoData.args["step"]?.toDouble() ?? nil))
+    }
+    
     else {
         uiComponent = TextComponent(uniqueId: demoData.uuid , uiModel: TextComponentUIModel(text: "something went wrong with \(demoData.uuid)", fontType: nil, fontColor: demoData.args["fontColor"] ?? nil))
     }
     
     return uiComponent
+}
+
+extension String {
+    func toDouble() -> Double? {
+        return NumberFormatter().number(from: self)?.doubleValue
+    }
 }
 
 class TextModel: ObservableObject {
@@ -91,9 +102,8 @@ class isOnModel : ObservableObject {
 class ToggleModel : ObservableObject {
     @Published var isOn: Bool = true
 }
-
-class isFileShowingModel : ObservableObject {
-    @Published var isShowing: Bool = false
+class SliderModel : ObservableObject {
+    @Published var value: Double = 0
 }
 
 class FilePickerModel : ObservableObject {

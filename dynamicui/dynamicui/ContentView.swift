@@ -84,6 +84,12 @@ func collectValue(component: UIComponent) -> String? {
     } else if componentType == "filepicker" {
         var pickerComponent = component as! FilepickerComponent
         value = pickerComponent.uiModel.selectedFile.wrappedValue?.base64EncodedString()
+    } else if componentType == "toggle" {
+        var toggleComponent = component as! ToggleComponent
+        value = String(toggleComponent.uiModel.isOn.wrappedValue)
+    } else if componentType == "slider" {
+        var sliderComponent = component as! SliderComponent
+        value = String(sliderComponent.uiModel.value.wrappedValue)
     }
     return value
 }

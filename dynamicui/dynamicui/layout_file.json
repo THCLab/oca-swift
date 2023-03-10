@@ -76,13 +76,6 @@
         "uuid" : "picker-123456799"
     },
     {
-        "type" : "checkbox",
-        "args" : {
-            "label" : "Check me"
-        },
-        "uuid" : "checkbox-123456789"
-    },
-    {
         "type" : "toggle",
         "args" : {
             "label" : "Toggle me"
@@ -96,6 +89,17 @@
             "buttonText" : "Click here"
         },
         "uuid" : "filepicker-123456789"
+    },
+    {
+        "type" : "slider",
+        "args" : {
+            "label" : "Choose value: ",
+            "min" : "0",
+            "max" : "10",
+            "step" : "0.5"
+            
+        },
+        "uuid" : "slider-123456789"
     }
     
 ]
