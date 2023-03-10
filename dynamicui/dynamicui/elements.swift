@@ -293,8 +293,6 @@ struct ToggleComponent: UIComponent {
 struct FilepickerUIModel {
     let label: String?
     let buttonText: String
-    //var isShowing: Binding<Bool>
-    //let buttonAction: ()
     var selectedFile: Binding<Data?>
     var selectedFileName: Binding<String?>
 }
@@ -318,6 +316,7 @@ struct FilepickerComponentView: View {
                 VStack {
                     HStack {
                         Text(uiModel.label!)
+                        Spacer()
                         Button(uiModel.buttonText) {
                             isSheetPresenting.toggle()
                         }.sheet(isPresented: $isSheetPresenting, content: {
@@ -331,6 +330,7 @@ struct FilepickerComponentView: View {
             }else{
                 HStack {
                     Text(uiModel.label!)
+                    Spacer()
                     Button(uiModel.buttonText) {
                         isSheetPresenting.toggle()
                     }.sheet(isPresented: $isSheetPresenting, content: {

@@ -81,6 +81,9 @@ func collectValue(component: UIComponent) -> String? {
     } else if componentType == "checkbox" {
         var checkboxComponent = component as! CheckboxComponent
         value = String(checkboxComponent.uiModel.isOn.wrappedValue)
+    } else if componentType == "filepicker" {
+        var pickerComponent = component as! FilepickerComponent
+        value = pickerComponent.uiModel.selectedFile.wrappedValue?.base64EncodedString()
     }
     return value
 }
