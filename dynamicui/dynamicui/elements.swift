@@ -172,7 +172,7 @@ struct PickerComponentView: View {
                     ForEach(0 ..< uiModel.options.count, id: \.self) { option in
                         Text(uiModel.options[option]).tag(option)
                     }
-                }.pickerStyle(.segmented)
+                }
             }
         }else{
             Picker("", selection: uiModel.selection){
@@ -214,6 +214,7 @@ struct SliderComponentView : View {
                     Slider(value: uiModel.value, in: uiModel.min...uiModel.max, step: uiModel.step ?? 1)
                     Text(String(uiModel.max))
                 }
+                Text("\(uiModel.value.wrappedValue)" as String)
                 //Text("Value: \(uiModel.value, specifier: "%.2f")")
             }
         }else{

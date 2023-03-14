@@ -52,8 +52,7 @@
         "type" : "picker",
         "args" : {
             "label" : "Pick email",
-            "selection" : "e",
-            "style" : "segmented"
+            "selection" : "e"
         },
         "options" : [
             ".com",
@@ -66,8 +65,7 @@
         "type" : "picker",
         "args" : {
             "label" : "Pick answer",
-            "selection" : "e",
-            "style" : "default"
+            "selection" : "e"
         },
         "options" : [
             "yes",
